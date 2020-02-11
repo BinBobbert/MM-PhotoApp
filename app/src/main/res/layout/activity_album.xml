@@ -21,11 +21,11 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/test_text"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"/>
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/recycle_album"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

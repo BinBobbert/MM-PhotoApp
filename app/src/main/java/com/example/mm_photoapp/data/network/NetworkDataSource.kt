@@ -1,8 +1,8 @@
 package com.example.mm_photoapp.data.network
 
 import androidx.lifecycle.LiveData
-import com.example.mm_photoapp.data.network.response.Photo
-import com.example.mm_photoapp.data.network.response.Album
+import com.example.mm_photoapp.data.db.entities.Photo
+import com.example.mm_photoapp.data.db.entities.Album
 
 interface NetworkDataSource {
     val downloadedAlbums: LiveData<List<Album>>
