@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MM-PhotoApp</string>
+    <string name="title_activity_album">Album List</string>
 </resources>
