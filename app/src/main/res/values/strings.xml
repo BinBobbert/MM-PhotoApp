@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">MM-PhotoApp</string>
     <string name="title_activity_album">Album List</string>
+    <string name="album_title_hint">This is an album title</string>
+    <string name="album_id_hint">1</string>
+    <string name="album_userid_hint">15</string>
+    <string name="arrow_content_description">An arrow indicating an onClick event</string>
 </resources>

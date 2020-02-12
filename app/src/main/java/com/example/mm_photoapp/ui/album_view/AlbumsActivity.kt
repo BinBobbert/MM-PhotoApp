@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mm_photoapp.R
 import dagger.android.support.DaggerAppCompatActivity
 
@@ -32,7 +33,13 @@ class AlbumsActivity : DaggerAppCompatActivity() {
 
         fetchedAlbums.observe(this, Observer {
 
-            test_text.text = fetchedAlbums.value.toString()
+            recycle_album.also{
+                it.layoutManager = LinearLayoutManager(this)
+
+                /** shuffling the AlbumList to have more variety **/
+                val albumAdapter = AlbumAdapter(fetchedAlbums.value!!.shuffled())
+                it.adapter = albumAdapter
+            }
         })
 
     }
