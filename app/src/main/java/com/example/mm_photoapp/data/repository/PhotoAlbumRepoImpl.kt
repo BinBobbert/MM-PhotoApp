@@ -1,10 +1,10 @@
 package com.example.mm_photoapp.data.repository
 
-import com.example.mm_photoapp.data.db.AlbumDao
+import com.example.mm_photoapp.data.db.PhotoAlbumDao
 import com.example.mm_photoapp.data.network.NetworkDataSource
 import com.example.mm_photoapp.data.db.entities.Album
 import com.example.mm_photoapp.data.db.entities.Photo
-import com.example.mm_photoapp.di.ApplicationModule.NetworkDataSourceInj
+import com.example.mm_photoapp.di.modules.ApplicationModule.NetworkDataSourceInj
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -17,12 +17,16 @@ import javax.inject.Inject
  */
 class PhotoAlbumRepoImpl @Inject constructor(
     @NetworkDataSourceInj private val networkDataSource: @JvmSuppressWildcards NetworkDataSource,
-    private val albumDao: AlbumDao
+    private val photoAlbumDao: PhotoAlbumDao
 ) : PhotoAlbumRepo {
 
     init {
         networkDataSource.downloadedAlbums.observeForever{
             persistFetchedAlbums(it)
+        }
+
+        networkDataSource.downloadedAlbumPhotos.observeForever{
+            persistFetchedAlbumPhotos(it)
         }
     }
 
@@ -32,13 +36,19 @@ class PhotoAlbumRepoImpl @Inject constructor(
      */
     override suspend fun fetchAlbums(): List<Album>{
         return withContext(Dispatchers.IO){
-            initData()
-            return@withContext albumDao.getAllAlbums()
+            initAlbumData()
+            return@withContext photoAlbumDao.getAllAlbums()
         }
     }
 
+    /**
+     * Retrieves a list of photos belonging to an Album
+     */
     override suspend fun getAlbumPhotos(albumId: Int): List<Photo> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return withContext(Dispatchers.IO){
+            initAlbumPhotosData(albumId)
+            return@withContext photoAlbumDao.getAlbumPhotos(albumId)
+        }
     }
 
     /**
@@ -46,9 +56,14 @@ class PhotoAlbumRepoImpl @Inject constructor(
      */
     private fun persistFetchedAlbums(fetchedAlbums: List<Album>){
         GlobalScope.launch(Dispatchers.IO) {
-            albumDao.upsert(fetchedAlbums)
+            photoAlbumDao.upsertAlbums(fetchedAlbums)
         }
+    }
 
+    private fun persistFetchedAlbumPhotos(fetchedPhotos: List<Photo>){
+        GlobalScope.launch(Dispatchers.IO) {
+            photoAlbumDao.upsertPhotos(fetchedPhotos)
+        }
     }
 
     /**
@@ -56,7 +71,13 @@ class PhotoAlbumRepoImpl @Inject constructor(
      * networDataSource.downloadedAlbums has an observer attached to it
      * If there are changes the data is persisted into the db
      */
-    private suspend fun initData(){
+    private suspend fun initAlbumData(){
         networkDataSource.getAlbums()
+    }
+
+    private suspend fun initAlbumPhotosData(albumId: Int){
+
+        networkDataSource.getAllPhotos()
+        //networkDataSource.getAlbumPhotos(albumId)
     }
 }

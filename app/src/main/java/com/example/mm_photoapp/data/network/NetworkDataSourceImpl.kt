@@ -48,4 +48,15 @@ class NetworkDataSourceImpl @Inject constructor(
             Log.e("error", e.toString())
         }
     }
+
+    override suspend fun getAllPhotos() {
+        try {
+            val fetchedPhotos: List<Photo> =
+                photoApi.getAllPhotos()
+
+            _downloadedAlbumPhotos.postValue(fetchedPhotos)
+        } catch (e: Exception) {
+            Log.e("error", e.toString())
+        }
+    }
 }

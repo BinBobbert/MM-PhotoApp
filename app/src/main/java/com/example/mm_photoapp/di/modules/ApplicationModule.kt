@@ -1,4 +1,4 @@
-package com.example.mm_photoapp.di
+package com.example.mm_photoapp.di.modules
 
 import android.content.Context
 import androidx.room.Room
@@ -30,7 +30,7 @@ object ApplicationModule{
         db: AppDatabase,
         dataSource: NetworkDataSourceImpl
     ): PhotoAlbumRepo {
-        return PhotoAlbumRepoImpl(dataSource, db.albumDao())
+        return PhotoAlbumRepoImpl(dataSource, db.photoAlbumDao())
     }
 
     @JvmStatic

@@ -5,15 +5,22 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.mm_photoapp.data.db.entities.Album
+import com.example.mm_photoapp.data.db.entities.Photo
 
 /**
  *  Communication with the database
  */
 @Dao
-interface AlbumDao{
+interface PhotoAlbumDao{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(albumList: List<Album>)
+    fun upsertAlbums(albumList: List<Album>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upsertPhotos(albumList: List<Photo>)
 
     @Query("SELECT * FROM albums")
     fun getAllAlbums(): List<Album>
+
+    @Query("SELECT * FROM photos WHERE albumId = :albumId")
+    fun getAlbumPhotos(albumId: Int):  List<Photo>
 }

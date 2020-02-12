@@ -11,5 +11,7 @@ interface NetworkDataSource {
 
     suspend fun getAlbums()
 
+    suspend fun getAllPhotos()
+
     suspend fun getAlbumPhotos(albumId: Int)
 }

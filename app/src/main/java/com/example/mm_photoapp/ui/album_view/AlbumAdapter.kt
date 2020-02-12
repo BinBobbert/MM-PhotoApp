@@ -1,6 +1,8 @@
 package com.example.mm_photoapp.ui.album_view
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -14,10 +16,20 @@ import com.example.mm_photoapp.databinding.RecycleAlbumRowBinding
  * Only inflates relevant Views for better performance
  */
 class AlbumAdapter(
-    private val albumList: List<Album>
+    private val albumList: List<Album>,
+    private val mOnAlbumListener: OnAlbumListener
 ): RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>(){
 
-    inner class AlbumViewHolder(val binding: RecycleAlbumRowBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class AlbumViewHolder(val binding: RecycleAlbumRowBinding, private val onAlbumsListener: OnAlbumListener): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+        init {
+            binding.albumRowContainer.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            onAlbumsListener.onAlbumClick(adapterPosition)
+        }
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlbumViewHolder =
         AlbumViewHolder(
@@ -26,7 +38,8 @@ class AlbumAdapter(
                 R.layout.recycle_album_row,
                 parent,
                 false
-            )
+            ),
+            mOnAlbumListener
         )
 
     override fun getItemCount(): Int {
@@ -35,6 +48,10 @@ class AlbumAdapter(
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         holder.binding.album = albumList[position]
+    }
+
+    interface OnAlbumListener{
+        fun onAlbumClick(pos: Int)
     }
 }
 

@@ -11,8 +11,7 @@ import com.example.mm_photoapp.data.db.entities.Photo
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase(){
-    abstract fun photoDao(): PhotoDao
 
-    abstract fun albumDao(): AlbumDao
+    abstract fun photoAlbumDao(): PhotoAlbumDao
 
 }

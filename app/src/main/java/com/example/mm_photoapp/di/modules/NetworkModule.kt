@@ -1,12 +1,10 @@
-package com.example.mm_photoapp.di
+package com.example.mm_photoapp.di.modules
 
-import android.provider.ContactsContract
 import com.example.mm_photoapp.data.network.PhotoAPI
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 /**

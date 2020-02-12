@@ -1,6 +1,8 @@
-package com.example.mm_photoapp.di
+package com.example.mm_photoapp.di.modules
 
 import androidx.lifecycle.ViewModel
+import com.example.mm_photoapp.di.ViewModelBuilder
+import com.example.mm_photoapp.di.ViewModelKey
 import com.example.mm_photoapp.ui.album_view.AlbumsActivity
 import com.example.mm_photoapp.ui.album_view.AlbumsViewModel
 import dagger.Binds

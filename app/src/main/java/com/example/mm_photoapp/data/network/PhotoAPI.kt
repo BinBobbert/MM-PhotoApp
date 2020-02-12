@@ -18,4 +18,7 @@ interface PhotoAPI{
     @GET("/photos")
     suspend fun getAlbumPhotos(@Query("id") albumId: Int): List<Photo>
 
+    @GET("/photos")
+    suspend fun getAllPhotos(): List<Photo>
+
 }
