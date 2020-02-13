@@ -46,7 +46,7 @@ class PhotoAlbumRepoImpl @Inject constructor(
      */
     override suspend fun getAlbumPhotos(albumId: Int): List<Photo> {
         return withContext(Dispatchers.IO){
-            initAlbumPhotosData(albumId)
+            initAlbumPhotosData()
             return@withContext photoAlbumDao.getAlbumPhotos(albumId)
         }
     }
@@ -75,8 +75,7 @@ class PhotoAlbumRepoImpl @Inject constructor(
         networkDataSource.getAlbums()
     }
 
-    private suspend fun initAlbumPhotosData(albumId: Int){
+    private suspend fun initAlbumPhotosData(){
         networkDataSource.getAllPhotos()
-        //networkDataSource.getAlbumPhotos(albumId)
     }
 }

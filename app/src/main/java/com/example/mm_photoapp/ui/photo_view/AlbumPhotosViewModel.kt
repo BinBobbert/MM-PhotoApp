@@ -20,6 +20,7 @@ class AlbumPhotosViewModel@Inject constructor(
 
     fun fetchData(albumId: Int){
 
+        // fetch data from repository
         viewModelScope.launch {
             val photos = photoAbumRepo.getAlbumPhotos(albumId)
             _photolist.postValue(photos)

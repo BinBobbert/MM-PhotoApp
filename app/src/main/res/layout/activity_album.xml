@@ -28,5 +28,4 @@
         android:id="@+id/recycle_album"
         android:background="@color/colorSecondary"/>
 
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

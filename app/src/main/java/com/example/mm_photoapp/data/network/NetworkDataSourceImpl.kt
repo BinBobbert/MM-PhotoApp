@@ -30,7 +30,6 @@ class NetworkDataSourceImpl @Inject constructor(
         try{
             val fetchedAlbums: List<Album> =
                 photoApi.getAlbums()
-            Log.d("chris", fetchedAlbums.toString())
 
             _downloadedAlbums.postValue(fetchedAlbums)
         } catch(e: Exception) {

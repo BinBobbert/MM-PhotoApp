@@ -12,8 +12,9 @@ import com.example.mm_photoapp.databinding.RecycleAlbumRowBinding
 
 /**
  * Adapter for the Album RecycleViewer
- * Makes use of Data Binding
- * Only inflates relevant Views for better performance
+ *
+ * @param albumList = A list of Albums retrieved from 'https://jsonplaceholder.typicode.com/'
+ * @param mOnAlbumListener = A listener for clicks on albums, in this case it is AlbumsActivity
  */
 class AlbumAdapter(
     private val albumList: List<Album>,

@@ -1,20 +1,20 @@
 package com.example.mm_photoapp.ui.photo_view
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.MainThread
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.mm_photoapp.R
 import com.example.mm_photoapp.data.db.entities.Photo
 import com.example.mm_photoapp.databinding.RecyclePhotoRowBinding
-import com.squareup.picasso.Picasso
-import kotlinx.coroutines.MainScope
-import okhttp3.internal.wait
 
+/**
+ * Adapter class for the RecycleViewer in AlbumPhotosActivity
+ *
+ * @param photoList = A list of photos belonging to an album
+ * @param mOnPhotoListener = A listener for clicks on photos, in this case it is AlbumPhotosActivity
+ */
 class PhotosAdapter(
     private val photoList: List<Photo>,
     private val mOnPhotoListener: OnPhotoListener

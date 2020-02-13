@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.photo_view.PhotoDetail">
+    tools:context=".ui.photo_view.PhotoDetail"
+    android:background="@color/colorSecondary">
 
     <androidx.constraintlayout.widget.Group
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         app:constraint_referenced_ids="photo_detail,photo_detail_title"
         android:id="@+id/group_detail" />
 
@@ -22,25 +23,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/photo_detail_content_description"/>
 
     <TextView
+        android:id="@+id/photo_detail_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/photo_detail_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="25dp"/>
-
-    <ProgressBar
-        android:id="@+id/progress_detail"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
+        app:layout_constraintTop_toBottomOf="@+id/photo_detail"
+        android:textAlignment="center"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

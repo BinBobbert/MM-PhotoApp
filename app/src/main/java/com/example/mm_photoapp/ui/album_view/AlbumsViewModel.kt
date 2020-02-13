@@ -21,8 +21,8 @@ class AlbumsViewModel @Inject constructor(
     val albumList: LiveData<List<Album>>
         get() = _albumList
 
+    // fetch data from repository
     fun fetchAlbums() {
-
         viewModelScope.launch {
             val albums = photoAbumRepo.fetchAlbums()
             _albumList.postValue(albums)

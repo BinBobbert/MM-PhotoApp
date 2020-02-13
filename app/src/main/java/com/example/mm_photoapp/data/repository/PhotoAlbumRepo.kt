@@ -1,6 +1,5 @@
 package com.example.mm_photoapp.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.mm_photoapp.data.db.entities.Album
 import com.example.mm_photoapp.data.db.entities.Photo
 

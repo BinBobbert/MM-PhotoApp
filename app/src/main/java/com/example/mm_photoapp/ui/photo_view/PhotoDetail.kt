@@ -12,7 +12,6 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_photo_detail.*
 import java.lang.Exception
 
-
 class PhotoDetail : Fragment() {
 
     private var photoUrl: String? = null
@@ -34,13 +33,11 @@ class PhotoDetail : Fragment() {
         return inflater.inflate(R.layout.fragment_photo_detail, container, false)
     }
 
-
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         Picasso.get().load(photoUrl).into(photo_detail, object: Callback{
             override fun onSuccess() {
-                progress_detail.visibility = View.GONE
                 group_detail.visibility = View.VISIBLE
             }
 
@@ -48,7 +45,6 @@ class PhotoDetail : Fragment() {
                 Log.e("error", e.toString())
             }
         })
-
         photo_detail_title.text = photoTitle
     }
 
@@ -65,8 +61,6 @@ class PhotoDetail : Fragment() {
                 putString(PHOTO_TITLE, title)
                 putString(PHOTO_URL, url)
             }
-
         }
-
     }
 }

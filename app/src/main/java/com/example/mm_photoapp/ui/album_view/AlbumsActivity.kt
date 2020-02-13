@@ -39,6 +39,7 @@ class AlbumsActivity : DaggerAppCompatActivity(), AlbumAdapter.OnAlbumListener {
 
             recyclerAlbums.addAll(it.shuffled())
 
+            // Initialize the recycleViewer
             recycle_album.also{
                 it.layoutManager = LinearLayoutManager(this)
 
@@ -50,6 +51,12 @@ class AlbumsActivity : DaggerAppCompatActivity(), AlbumAdapter.OnAlbumListener {
 
     }
 
+    /**
+     *  Called when the user clicks on an album
+     *  Opens the album to view its photos
+     *
+     *  @param pos = position of clicked album
+     */
     override fun onAlbumClick(pos: Int) {
         val album = recyclerAlbums[pos]
 

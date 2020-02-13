@@ -1,18 +1,13 @@
 package com.example.mm_photoapp.ui.photo_view
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.Layout
-import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mm_photoapp.R
 import com.example.mm_photoapp.data.db.entities.Photo
-import com.example.mm_photoapp.ui.album_view.AlbumsActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_album_photos.*
 import javax.inject.Inject
@@ -40,7 +35,7 @@ class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoList
         setSupportActionBar(toolbar)
         recycler_photos.visibility = View.GONE
 
-        val albumId = intent.getIntExtra("AlbumID", 1)
+        val albumId = intent.getIntExtra(getString(R.string.album_id), 1)
         val fetchedPhotos = viewModel.photoList
 
         viewModel.fetchData(albumId)
@@ -49,18 +44,14 @@ class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoList
 
             recyclerPhotos.addAll(it)
 
+            // initialize recycleViewer
             recycler_photos.also {rec ->
                 rec.layoutManager = GridLayoutManager(this@AlbumPhotosActivity, 2)
                 val photosAdapter = PhotosAdapter(recyclerPhotos, this@AlbumPhotosActivity)
                 rec.adapter = photosAdapter
 
-                recycler_photos.viewTreeObserver
-                    .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-                        override fun onGlobalLayout() {
-                            recycler_photos.visibility = View.VISIBLE
-                            recycler_photos.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                        }
-                    })
+                rec.visibility = View.VISIBLE
+
             }
         })
     }
@@ -76,6 +67,7 @@ class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoList
         val manager = supportFragmentManager
 
         val fragmentTransaction = manager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out)
         fragmentTransaction.add(R.id.fragment_container, photoDetailFragment)
         fragmentTransaction.commit()
 
@@ -95,21 +87,22 @@ class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoList
      * without going back to the first activity
      */
     override fun onBackPressed() {
-        Log.d("chris", "back button presser?")
-
         if (!activeFrag){
             activeFrag = true
-            val intent = Intent(this, AlbumsActivity::class.java)
-            startActivity(intent)
+            finish()
         } else {
             onResume()
             activeFrag = false
         }
     }
 
+    /**
+     * onResume the layouts are switched back
+     */
     override fun onResume() {
         super.onResume()
-        recycler_photos.visibility = View.VISIBLE
         fragment_container.visibility = View.GONE
+        recycler_photos.visibility = View.VISIBLE
     }
+
 }
