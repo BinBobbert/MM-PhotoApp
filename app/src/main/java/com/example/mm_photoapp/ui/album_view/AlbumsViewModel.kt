@@ -26,6 +26,6 @@ class AlbumsViewModel @Inject constructor(
         viewModelScope.launch {
             val albums = photoAbumRepo.fetchAlbums()
             _albumList.postValue(albums)
-            }
+        }
     }
 }

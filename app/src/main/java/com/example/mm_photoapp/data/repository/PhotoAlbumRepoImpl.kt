@@ -76,7 +76,6 @@ class PhotoAlbumRepoImpl @Inject constructor(
     }
 
     private suspend fun initAlbumPhotosData(albumId: Int){
-
         networkDataSource.getAllPhotos()
         //networkDataSource.getAlbumPhotos(albumId)
     }

@@ -13,5 +13,4 @@ import com.example.mm_photoapp.data.db.entities.Photo
 abstract class AppDatabase : RoomDatabase(){
 
     abstract fun photoAlbumDao(): PhotoAlbumDao
-
 }

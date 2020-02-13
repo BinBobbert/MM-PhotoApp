@@ -58,7 +58,5 @@ class AlbumsActivity : DaggerAppCompatActivity(), AlbumAdapter.OnAlbumListener {
         }
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left)
-
     }
-
 }

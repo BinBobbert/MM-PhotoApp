@@ -11,7 +11,6 @@ import retrofit2.http.Query
  *
  */
 interface PhotoAPI{
-
     @GET("/albums")
     suspend fun getAlbums(): List<Album>
 
@@ -20,5 +19,4 @@ interface PhotoAPI{
 
     @GET("/photos")
     suspend fun getAllPhotos(): List<Photo>
-
 }

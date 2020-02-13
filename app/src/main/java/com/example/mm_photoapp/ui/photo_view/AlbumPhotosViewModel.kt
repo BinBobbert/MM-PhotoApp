@@ -18,14 +18,11 @@ class AlbumPhotosViewModel@Inject constructor(
     val photoList: LiveData<List<Photo>>
         get() = _photolist
 
-
     fun fetchData(albumId: Int){
 
         viewModelScope.launch {
             val photos = photoAbumRepo.getAlbumPhotos(albumId)
             _photolist.postValue(photos)
         }
-
     }
-
 }

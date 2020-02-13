@@ -29,13 +29,13 @@
         android:visibility="invisible"
         android:background="@color/colorSecondary"/>
 
-    <ProgressBar
-        android:id="@+id/progress_photo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:visibility="visible"
-        app:layout_anchorGravity="center" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/fragment_container"
+        android:visibility="gone" >
+        <include layout="@layout/fragment_photo_detail"/>
 
-
+    </RelativeLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

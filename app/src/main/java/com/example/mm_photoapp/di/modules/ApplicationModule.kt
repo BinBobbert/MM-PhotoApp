@@ -54,6 +54,4 @@ object ApplicationModule{
 }
 
 @Module
-abstract class ApplicationModuleBinds{
-
-}
+abstract class ApplicationModuleBinds

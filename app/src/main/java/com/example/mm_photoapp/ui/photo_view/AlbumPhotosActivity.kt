@@ -1,6 +1,8 @@
 package com.example.mm_photoapp.ui.photo_view
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.Layout
 import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
@@ -10,12 +12,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.mm_photoapp.R
 import com.example.mm_photoapp.data.db.entities.Photo
+import com.example.mm_photoapp.ui.album_view.AlbumsActivity
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_album_photos.*
 import javax.inject.Inject
 
-
-class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoListener {
+/**
+ * This activity allows users to see a list of photos
+ * The list of photos is specified by an album
+ */
+class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoListener{
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -24,34 +30,33 @@ class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoList
 
     private var recyclerPhotos  = mutableListOf<Photo>()
 
+    // Boolean to determine whether there is an active fragment
+    private var activeFrag = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_album_photos)
         setSupportActionBar(toolbar)
         recycler_photos.visibility = View.GONE
-        progress_photo.visibility = View.VISIBLE
 
         val albumId = intent.getIntExtra("AlbumID", 1)
         val fetchedPhotos = viewModel.photoList
 
         viewModel.fetchData(albumId)
 
-
-
         fetchedPhotos.observe(this@AlbumPhotosActivity, Observer {
 
             recyclerPhotos.addAll(it)
 
-            recycler_photos.also {
-                it.layoutManager = GridLayoutManager(this@AlbumPhotosActivity, 2)
-                val photosAdapter = PhotosAdapter(recyclerPhotos, this@AlbumPhotosActivity, this@AlbumPhotosActivity)
-                it.adapter = photosAdapter
+            recycler_photos.also {rec ->
+                rec.layoutManager = GridLayoutManager(this@AlbumPhotosActivity, 2)
+                val photosAdapter = PhotosAdapter(recyclerPhotos, this@AlbumPhotosActivity)
+                rec.adapter = photosAdapter
 
                 recycler_photos.viewTreeObserver
                     .addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
                         override fun onGlobalLayout() {
-                            progress_photo.visibility = View.GONE
                             recycler_photos.visibility = View.VISIBLE
                             recycler_photos.viewTreeObserver.removeOnGlobalLayoutListener(this)
                         }
@@ -60,13 +65,51 @@ class AlbumPhotosActivity : DaggerAppCompatActivity(), PhotosAdapter.OnPhotoList
         })
     }
 
+    /**
+     * Called when the user clicks on a photo
+     * Starts up a fragment and switches layout visibility
+     */
     override fun onPhotoClick(pos: Int) {
-        Log.d("chris", " photo clicked")
+        val photo = recyclerPhotos[pos]
+
+        val photoDetailFragment = PhotoDetail.newInstance(photo.url, photo.title)
+        val manager = supportFragmentManager
+
+        val fragmentTransaction = manager.beginTransaction()
+        fragmentTransaction.add(R.id.fragment_container, photoDetailFragment)
+        fragmentTransaction.commit()
+
+        recycler_photos.visibility = View.GONE
+        fragment_container.visibility = View.VISIBLE
+        activeFrag = true
+
     }
 
     override fun finish() {
         super.finish()
-
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right)
+    }
+
+    /**
+     * Overriding onBackPressed so that we can back out of the fragment
+     * without going back to the first activity
+     */
+    override fun onBackPressed() {
+        Log.d("chris", "back button presser?")
+
+        if (!activeFrag){
+            activeFrag = true
+            val intent = Intent(this, AlbumsActivity::class.java)
+            startActivity(intent)
+        } else {
+            onResume()
+            activeFrag = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        recycler_photos.visibility = View.VISIBLE
+        fragment_container.visibility = View.GONE
     }
 }

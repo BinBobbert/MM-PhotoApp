@@ -17,8 +17,7 @@ import okhttp3.internal.wait
 
 class PhotosAdapter(
     private val photoList: List<Photo>,
-    private val mOnPhotoListener: OnPhotoListener,
-    private val context: Context
+    private val mOnPhotoListener: OnPhotoListener
 ): RecyclerView.Adapter<PhotosAdapter.PhotoViewHolder>() {
 
     inner class PhotoViewHolder(val binding: RecyclePhotoRowBinding, private val onPhotoListener: OnPhotoListener): RecyclerView.ViewHolder(binding.root), View.OnClickListener{
@@ -48,8 +47,6 @@ class PhotosAdapter(
 
     override fun onBindViewHolder(holder: PhotoViewHolder, position: Int) {
         holder.binding.photo = photoList[position]
-
-
     }
 
     interface OnPhotoListener{

@@ -4,8 +4,13 @@
     <string name="album_title_hint">This is an album title</string>
     <string name="album_id_hint">1</string>
     <string name="album_userid_hint">15</string>
-    <string name="arrow_content_description">An arrow indicating an onClick event</string>
+    <string name="arrow_content_description">An arrow indicating an onClick event. </string>
     <string name="album_photo_content_description"> An image belonging to an album. </string>
+    <string name="photo_detail_content_description"> This is a more detailed view of a selected photo.</string>
     <string name="title_activity_album_photos">Album Photos</string>
+    <string name="photo_title_hint"> This is a photo title</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
